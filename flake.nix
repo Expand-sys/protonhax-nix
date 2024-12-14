@@ -10,9 +10,14 @@
       system = "x86_64-linux";
       version = "1.0.5";
       downloadUrl = {
+         "specific" = {
+	        url = "https://github.com/jcnils/protonhax/archive/refs/tags/${version}.tar.gz";
+	        sha256 = "sha256:1p3z0mmlybl0bn6352bg38aqadd0z1psar6g96fzc5wsdc4hqvp4";
+        };
         "generic" = {
-	  url = "https://github.com/jcnils/protonhax/archive/refs/tags/${version}.tar.gz";
-   };
+	        url = "https://github.com/jcnils/protonhax/archive/refs/tags/${version}.tar.gz";
+          sha256 = "sha256:1p3z0mmlybl0bn6352bg38aqadd0z1psar6g96fzc5wsdc4hqvp4";
+        };
       };
 
       pkgs = import nixpkgs {
@@ -40,6 +45,7 @@
 
 		src = builtins.fetchTarball {
 		  url = downloadData.url;
+      sha256 = downloadData.sha256;
 		};
 		
 		desktopSrc = ./.;
@@ -62,6 +68,7 @@
     {
       packages."${system}" = {
         generic = mkZen { variant = "generic"; };
+        specific = mkZen { variant = "specific"; };
 	default = self.packages."${system}".specific;
       };
     };
